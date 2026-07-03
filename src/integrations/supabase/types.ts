@@ -14,13 +14,86 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bets: {
+        Row: {
+          created_at: string
+          game: string
+          id: string
+          meta: Json
+          multiplier: number
+          outcome: string
+          payout: number
+          user_id: string
+          wager: number
+        }
+        Insert: {
+          created_at?: string
+          game: string
+          id?: string
+          meta?: Json
+          multiplier?: number
+          outcome: string
+          payout: number
+          user_id: string
+          wager: number
+        }
+        Update: {
+          created_at?: string
+          game?: string
+          id?: string
+          meta?: Json
+          multiplier?: number
+          outcome?: string
+          payout?: number
+          user_id?: string
+          wager?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          balance: number
+          created_at: string
+          id: string
+          updated_at: string
+          username: string
+        }
+        Insert: {
+          balance?: number
+          created_at?: string
+          id: string
+          updated_at?: string
+          username: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      adjust_balance: { Args: { p_delta: number }; Returns: number }
+      settle_bet: {
+        Args: {
+          p_game: string
+          p_meta?: Json
+          p_multiplier: number
+          p_outcome: string
+          p_payout: number
+          p_wager: number
+        }
+        Returns: {
+          bet_id: string
+          new_balance: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
