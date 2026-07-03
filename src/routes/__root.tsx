@@ -15,7 +15,6 @@ import "@fontsource-variable/inter";
 import "@fontsource/space-grotesk/400.css";
 import "@fontsource/space-grotesk/600.css";
 import "@fontsource/space-grotesk/700.css";
-import "@fontsource/space-grotesk/800.css";
 
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
