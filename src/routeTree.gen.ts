@@ -9,38 +9,140 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CasinoMinesRouteImport } from './routes/casino/mines'
+import { Route as CasinoKenoRouteImport } from './routes/casino/keno'
+import { Route as CasinoHiloRouteImport } from './routes/casino/hilo'
+import { Route as CasinoDragonTowerRouteImport } from './routes/casino/dragon-tower'
+import { Route as CasinoCrashRouteImport } from './routes/casino/crash'
+import { Route as CasinoBlackjackRouteImport } from './routes/casino/blackjack'
 
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CasinoMinesRoute = CasinoMinesRouteImport.update({
+  id: '/casino/mines',
+  path: '/casino/mines',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasinoKenoRoute = CasinoKenoRouteImport.update({
+  id: '/casino/keno',
+  path: '/casino/keno',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasinoHiloRoute = CasinoHiloRouteImport.update({
+  id: '/casino/hilo',
+  path: '/casino/hilo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasinoDragonTowerRoute = CasinoDragonTowerRouteImport.update({
+  id: '/casino/dragon-tower',
+  path: '/casino/dragon-tower',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasinoCrashRoute = CasinoCrashRouteImport.update({
+  id: '/casino/crash',
+  path: '/casino/crash',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CasinoBlackjackRoute = CasinoBlackjackRouteImport.update({
+  id: '/casino/blackjack',
+  path: '/casino/blackjack',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/casino/blackjack': typeof CasinoBlackjackRoute
+  '/casino/crash': typeof CasinoCrashRoute
+  '/casino/dragon-tower': typeof CasinoDragonTowerRoute
+  '/casino/hilo': typeof CasinoHiloRoute
+  '/casino/keno': typeof CasinoKenoRoute
+  '/casino/mines': typeof CasinoMinesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/casino/blackjack': typeof CasinoBlackjackRoute
+  '/casino/crash': typeof CasinoCrashRoute
+  '/casino/dragon-tower': typeof CasinoDragonTowerRoute
+  '/casino/hilo': typeof CasinoHiloRoute
+  '/casino/keno': typeof CasinoKenoRoute
+  '/casino/mines': typeof CasinoMinesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/casino/blackjack': typeof CasinoBlackjackRoute
+  '/casino/crash': typeof CasinoCrashRoute
+  '/casino/dragon-tower': typeof CasinoDragonTowerRoute
+  '/casino/hilo': typeof CasinoHiloRoute
+  '/casino/keno': typeof CasinoKenoRoute
+  '/casino/mines': typeof CasinoMinesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/casino/blackjack'
+    | '/casino/crash'
+    | '/casino/dragon-tower'
+    | '/casino/hilo'
+    | '/casino/keno'
+    | '/casino/mines'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/casino/blackjack'
+    | '/casino/crash'
+    | '/casino/dragon-tower'
+    | '/casino/hilo'
+    | '/casino/keno'
+    | '/casino/mines'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/casino/blackjack'
+    | '/casino/crash'
+    | '/casino/dragon-tower'
+    | '/casino/hilo'
+    | '/casino/keno'
+    | '/casino/mines'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  CasinoBlackjackRoute: typeof CasinoBlackjackRoute
+  CasinoCrashRoute: typeof CasinoCrashRoute
+  CasinoDragonTowerRoute: typeof CasinoDragonTowerRoute
+  CasinoHiloRoute: typeof CasinoHiloRoute
+  CasinoKenoRoute: typeof CasinoKenoRoute
+  CasinoMinesRoute: typeof CasinoMinesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +150,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/casino/mines': {
+      id: '/casino/mines'
+      path: '/casino/mines'
+      fullPath: '/casino/mines'
+      preLoaderRoute: typeof CasinoMinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/casino/keno': {
+      id: '/casino/keno'
+      path: '/casino/keno'
+      fullPath: '/casino/keno'
+      preLoaderRoute: typeof CasinoKenoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/casino/hilo': {
+      id: '/casino/hilo'
+      path: '/casino/hilo'
+      fullPath: '/casino/hilo'
+      preLoaderRoute: typeof CasinoHiloRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/casino/dragon-tower': {
+      id: '/casino/dragon-tower'
+      path: '/casino/dragon-tower'
+      fullPath: '/casino/dragon-tower'
+      preLoaderRoute: typeof CasinoDragonTowerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/casino/crash': {
+      id: '/casino/crash'
+      path: '/casino/crash'
+      fullPath: '/casino/crash'
+      preLoaderRoute: typeof CasinoCrashRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/casino/blackjack': {
+      id: '/casino/blackjack'
+      path: '/casino/blackjack'
+      fullPath: '/casino/blackjack'
+      preLoaderRoute: typeof CasinoBlackjackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  CasinoBlackjackRoute: CasinoBlackjackRoute,
+  CasinoCrashRoute: CasinoCrashRoute,
+  CasinoDragonTowerRoute: CasinoDragonTowerRoute,
+  CasinoHiloRoute: CasinoHiloRoute,
+  CasinoKenoRoute: CasinoKenoRoute,
+  CasinoMinesRoute: CasinoMinesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
