@@ -11,10 +11,15 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
+// @ts-expect-error - fontsource ships as CSS side-effect only
 import "@fontsource-variable/inter";
+// @ts-expect-error - fontsource ships as CSS side-effect only
 import "@fontsource/space-grotesk/400.css";
+// @ts-expect-error - fontsource ships as CSS side-effect only
 import "@fontsource/space-grotesk/600.css";
+// @ts-expect-error - fontsource ships as CSS side-effect only
 import "@fontsource/space-grotesk/700.css";
+// @ts-expect-error - fontsource ships as CSS side-effect only
 import "@fontsource/space-grotesk/800.css";
 
 import { reportLovableError } from "../lib/lovable-error-reporting";
