@@ -87,6 +87,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "BetBetter — Provably-fair casino originals" },
+      { name: "description", content: "An online casino platform offering a variety of games and a user-friendly interface." },
+      { property: "og:description", content: "An online casino platform offering a variety of games and a user-friendly interface." },
+      { name: "twitter:description", content: "An online casino platform offering a variety of games and a user-friendly interface." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/99bd194d-9ce8-4f58-b263-a61a0fdc00c7/id-preview-39f139e2--6d733aca-4a69-4efe-9706-7dc5701d1f12.lovable.app-1783051265455.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/99bd194d-9ce8-4f58-b263-a61a0fdc00c7/id-preview-39f139e2--6d733aca-4a69-4efe-9706-7dc5701d1f12.lovable.app-1783051265455.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
