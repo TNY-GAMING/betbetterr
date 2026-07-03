@@ -1,12 +1,14 @@
 import { supabase } from "@/integrations/supabase/client";
 
+import type { Json } from "@/integrations/supabase/types";
+
 export type SettleParams = {
   game: string;
   wager: number;
   payout: number;
   multiplier: number;
   outcome: string;
-  meta?: Record<string, unknown>;
+  meta?: Json;
 };
 
 export async function settleBet(p: SettleParams): Promise<number> {
