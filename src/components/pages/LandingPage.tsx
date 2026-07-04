@@ -72,13 +72,13 @@ function LobbyView() {
             return (
               <Link
                 key={g.slug}
-                to={`/casino/${g.slug}` as string}
+                to={`/casino/${g.slug}`}
                 className="group relative aspect-[3/4] rounded-xl overflow-hidden border border-border bg-surface-1 hover:border-border-strong transition-all hover:-translate-y-0.5"
                 style={{
                   backgroundImage: `linear-gradient(155deg, ${g.from} 0%, ${g.to} 55%, #0f212e 100%)`,
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none" />
                 <div className="relative h-full flex flex-col justify-between p-4">
                   <Icon size={32} className="text-white/95 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)] group-hover:scale-110 transition-transform" />
                   <div>
