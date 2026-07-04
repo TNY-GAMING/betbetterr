@@ -3,7 +3,13 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "./use-session";
 
-export type Profile = { id: string; username: string; balance: number };
+export type Profile = {
+  id: string;
+  username: string;
+  balance: number;
+  display_name: string | null;
+  avatar_url: string | null;
+};
 
 export function useProfile() {
   const { user } = useSession();
@@ -15,7 +21,7 @@ export function useProfile() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("profiles")
-        .select("id, username, balance")
+        .select("id, username, balance, display_name, avatar_url")
         .eq("id", user!.id)
         .maybeSingle();
       if (error) throw error;
