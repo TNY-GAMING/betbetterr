@@ -86,20 +86,29 @@ export function CasinoShell({ children }: { children: React.ReactNode }) {
                   onClick={() => setUserMenu((v) => !v)}
                   className="flex items-center gap-1.5 h-9 pl-2 pr-2 rounded-md hover:bg-surface-2 text-sm"
                 >
-                  <span className="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-teal grid place-items-center text-primary-foreground font-black text-xs">
-                    {profile.username.slice(0, 1).toUpperCase()}
+                  <span className="w-7 h-7 rounded-full overflow-hidden bg-gradient-to-br from-primary to-teal grid place-items-center text-primary-foreground font-black text-xs">
+                    {profile.avatar_url ? (
+                      <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      (profile.display_name || profile.username).slice(0, 1).toUpperCase()
+                    )}
                   </span>
                   <ChevronDown size={14} className="text-muted-foreground hidden md:block" />
                 </button>
                 {userMenu && (
-                  <div className="absolute right-0 top-full mt-2 min-w-[200px] card-panel p-1.5 shadow-panel z-50">
+                  <div className="absolute right-0 top-full mt-2 min-w-[220px] card-panel p-1.5 shadow-panel z-50">
                     <div className="px-3 py-2 border-b border-border mb-1">
                       <div className="text-[11px] text-muted-foreground">Signed in as</div>
-                      <div className="font-semibold text-sm truncate">{profile.username}</div>
+                      <div className="font-semibold text-sm truncate">{profile.display_name || profile.username}</div>
+                      <div className="text-[11px] text-muted-foreground truncate">@{profile.username}</div>
                     </div>
-                    <button className="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-surface-2 flex items-center gap-2">
-                      <User size={14} /> Account
-                    </button>
+                    <Link
+                      to="/settings"
+                      onClick={() => setUserMenu(false)}
+                      className="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-surface-2 flex items-center gap-2"
+                    >
+                      <User size={14} /> Account settings
+                    </Link>
                     <button onClick={signOut} className="w-full text-left px-3 py-2 rounded-md text-sm hover:bg-surface-2 flex items-center gap-2 text-red">
                       <LogOut size={14} /> Sign out
                     </button>

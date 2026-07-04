@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CasinoMinesRouteImport } from './routes/casino/mines'
@@ -18,6 +19,11 @@ import { Route as CasinoDragonTowerRouteImport } from './routes/casino/dragon-to
 import { Route as CasinoCrashRouteImport } from './routes/casino/crash'
 import { Route as CasinoBlackjackRouteImport } from './routes/casino/blackjack'
 
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -62,6 +68,7 @@ const CasinoBlackjackRoute = CasinoBlackjackRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/settings': typeof SettingsRoute
   '/casino/blackjack': typeof CasinoBlackjackRoute
   '/casino/crash': typeof CasinoCrashRoute
   '/casino/dragon-tower': typeof CasinoDragonTowerRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/settings': typeof SettingsRoute
   '/casino/blackjack': typeof CasinoBlackjackRoute
   '/casino/crash': typeof CasinoCrashRoute
   '/casino/dragon-tower': typeof CasinoDragonTowerRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/settings': typeof SettingsRoute
   '/casino/blackjack': typeof CasinoBlackjackRoute
   '/casino/crash': typeof CasinoCrashRoute
   '/casino/dragon-tower': typeof CasinoDragonTowerRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/settings'
     | '/casino/blackjack'
     | '/casino/crash'
     | '/casino/dragon-tower'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/settings'
     | '/casino/blackjack'
     | '/casino/crash'
     | '/casino/dragon-tower'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/settings'
     | '/casino/blackjack'
     | '/casino/crash'
     | '/casino/dragon-tower'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  SettingsRoute: typeof SettingsRoute
   CasinoBlackjackRoute: typeof CasinoBlackjackRoute
   CasinoCrashRoute: typeof CasinoCrashRoute
   CasinoDragonTowerRoute: typeof CasinoDragonTowerRoute
@@ -136,6 +149,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  SettingsRoute: SettingsRoute,
   CasinoBlackjackRoute: CasinoBlackjackRoute,
   CasinoCrashRoute: CasinoCrashRoute,
   CasinoDragonTowerRoute: CasinoDragonTowerRoute,
@@ -208,13 +229,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
