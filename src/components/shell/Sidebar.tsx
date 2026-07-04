@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import {
   Dice5, Rocket, Bomb, ArrowUpDown, Grid3x3, Spade, Layers,
-  Home, Trophy, Sparkles, Users, LifeBuoy, ShieldCheck,
+  Home, Trophy, Sparkles, Users, LifeBuoy, ShieldCheck, Settings as SettingsIcon,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
 
@@ -13,6 +13,10 @@ const primaryNav = [
   { to: "/casino/hilo", label: "Hilo", icon: ArrowUpDown },
   { to: "/casino/keno", label: "Keno", icon: Grid3x3 },
   { to: "/casino/blackjack", label: "Blackjack", icon: Spade },
+] as const;
+
+const accountNav = [
+  { to: "/settings", label: "Account settings", icon: SettingsIcon },
 ] as const;
 
 const secondaryNav = [
