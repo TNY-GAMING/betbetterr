@@ -305,7 +305,7 @@ function TransactionsPanel() {
       const from = page * PAGE;
       const to = from + PAGE - 1;
       const { data, error, count } = await supabase
-        .from("transactions" as never)
+        .from("transactions")
         .select("id, kind, amount, balance_after, method, created_at", { count: "exact" })
         .eq("user_id", user!.id)
         .order("created_at", { ascending: false })
