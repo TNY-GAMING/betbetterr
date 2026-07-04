@@ -109,8 +109,8 @@ function ProfilePanel() {
 
   useEffect(() => {
     if (profile) {
-      setDisplayName((profile as any).display_name ?? profile.username ?? "");
-      setAvatarUrl((profile as any).avatar_url ?? "");
+      setDisplayName(profile.display_name ?? profile.username ?? "");
+      setAvatarUrl(profile.avatar_url ?? "");
     }
   }, [profile]);
 
@@ -125,7 +125,7 @@ function ProfilePanel() {
       }
       const { error } = await supabase
         .from("profiles")
-        .update({ display_name: trimmedName || null, avatar_url: trimmedAvatar || null } as never)
+        .update({ display_name: trimmedName || null, avatar_url: trimmedAvatar || null })
         .eq("id", user.id);
       if (error) throw error;
       await refetch();
