@@ -80,6 +80,15 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void } = {}) {
 
         <div className="space-y-0.5">
           <div className="px-3 pb-1 text-[10px] font-black uppercase tracking-wider text-muted-foreground">
+            Account
+          </div>
+          {accountNav.map((n) => (
+            <LinkItem key={n.to} to={n.to} label={n.label} Icon={n.icon} onClick={onNavigate} />
+          ))}
+        </div>
+
+        <div className="space-y-0.5">
+          <div className="px-3 pb-1 text-[10px] font-black uppercase tracking-wider text-muted-foreground">
             More
           </div>
           {secondaryNav.map((n) => (
