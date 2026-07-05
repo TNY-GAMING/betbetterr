@@ -1,7 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useId } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "./use-session";
+
 
 export type Profile = {
   id: string;
@@ -29,11 +30,15 @@ export function useProfile() {
     },
   });
 
-  // Realtime balance sync
+  const instanceId = useId();
+
+  // Realtime balance sync — unique channel per hook instance to avoid
+  // "cannot add postgres_changes callbacks after subscribe()" when multiple
+  // components mount useProfile against the same user.
   useEffect(() => {
     if (!user) return;
     const ch = supabase
-      .channel(`profile:${user.id}`)
+      .channel(`profile:${user.id}:${instanceId}`)
       .on(
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "profiles", filter: `id=eq.${user.id}` },
@@ -47,7 +52,8 @@ export function useProfile() {
     return () => {
       supabase.removeChannel(ch);
     };
-  }, [user, qc]);
+  }, [user, qc, instanceId]);
+
 
   const setBalance = (bal: number) => {
     if (!user) return;
