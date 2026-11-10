@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/hooks/use-session";
 import { useProfile } from "@/hooks/use-profile";
 import { fmt } from "@/lib/format";
+import { GAMES } from "@/lib/casino";
 import { WalletDialog } from "./WalletDialog";
 import { Sidebar, MobileSidebar } from "./Sidebar";
 import logo from "@/assets/logo.png";
@@ -16,6 +17,14 @@ export function CasinoShell({ children }: { children: React.ReactNode }) {
   const [walletOpen, setWalletOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  const searchResults = searchQuery.trim()
+    ? GAMES.filter((game) =>
+        `${game.name} ${game.tagline} ${game.slug}`.toLowerCase().includes(searchQuery.trim().toLowerCase()),
+      )
+    : [];
 
   async function signOut() {
     setUserMenu(false);
@@ -56,13 +65,65 @@ export function CasinoShell({ children }: { children: React.ReactNode }) {
             <span className="font-display font-black text-lg tracking-tight">bet<span className="text-primary">better</span></span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-2 flex-1 max-w-sm">
-            <div className="relative flex-1">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <input
-                className="w-full bg-surface-2 border-0 rounded-md h-9 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-border-strong"
-                placeholder="Search casino…"
-              />
+          <div className="relative flex items-center md:flex-1 md:max-w-sm">
+            <button
+              type="button"
+              className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-md hover:bg-surface-2 text-muted-foreground"
+              aria-label="Search games and slots"
+              aria-expanded={searchOpen}
+              onClick={() => setSearchOpen((open) => !open)}
+            >
+              <Search size={18} />
+            </button>
+            <div className={`${searchOpen ? "absolute right-0 top-11 z-50 w-[min(90vw,24rem)]" : "hidden"} md:block md:static md:w-full`}>
+              <div className="relative">
+                <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  onFocus={() => setSearchOpen(true)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") {
+                      setSearchOpen(false);
+                      event.currentTarget.blur();
+                    }
+                  }}
+                  className="w-full bg-surface-2 border-0 rounded-md h-9 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-border-strong"
+                  placeholder="Search games and slots…"
+                  aria-label="Search games and slots"
+                  aria-autocomplete="list"
+                  aria-expanded={searchOpen && searchQuery.trim().length > 0}
+                />
+                {searchOpen && searchQuery.trim() && (
+                  <div className="absolute left-0 right-0 top-full mt-2 overflow-hidden rounded-md border border-border bg-surface-1 shadow-panel">
+                    {searchResults.length > 0 ? (
+                      <div className="py-1" role="listbox" aria-label="Search results">
+                        {searchResults.map((game) => (
+                          <Link
+                            key={game.slug}
+                            to={`/casino/${game.slug}`}
+                            onClick={() => {
+                              setSearchOpen(false);
+                              setSearchQuery("");
+                            }}
+                            className="flex items-center justify-between gap-3 px-3 py-2.5 text-sm hover:bg-surface-2"
+                            role="option"
+                            aria-selected="false"
+                          >
+                            <span className="font-semibold">{game.name}</span>
+                            <span className="text-xs text-muted-foreground">BetBetter Original</span>
+                          </Link>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="px-3 py-3 text-sm text-muted-foreground">
+                        No matches. Provider slots aren’t available in the catalog yet.
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
